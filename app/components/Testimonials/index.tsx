@@ -41,7 +41,7 @@ const testimonials: Testimonial[] = [
   },
 ];
 
-const ParentTestimonials = () => {
+const Testimonials = () => {
   return (
     <section
       className="py-16 bg-gradient-to-b from-blue-50 to-white"
@@ -120,4 +120,4 @@ const ParentTestimonials = () => {
   );
 };
 
-export default ParentTestimonials;
+export default Testimonials;

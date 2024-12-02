@@ -3,7 +3,7 @@ import Link from "next/link";
 import Image from "next/image";
 import { Mail, MapPin } from "lucide-react";
 
-const SimplifiedSchoolFooter = () => {
+const Footer = () => {
   return (
     <footer className="bg-blue-50 py-8 px-4">
       <div className="max-w-5xl mx-auto grid md:grid-cols-3 gap-6">
@@ -101,4 +101,4 @@ const SimplifiedSchoolFooter = () => {
   );
 };
 
-export default SimplifiedSchoolFooter;
+export default Footer;
