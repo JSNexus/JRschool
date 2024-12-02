@@ -1,138 +1,123 @@
-"use client"
-import Slider from "react-slick";
-import React, { Component } from "react";
-import { StarIcon } from '@heroicons/react/24/solid';
+"use client";
+
+import React from "react";
+import { Swiper, SwiperSlide } from "swiper/react";
+import { Pagination, Autoplay } from "swiper/modules";
+import { QuoteIcon } from "lucide-react";
 import Image from "next/image";
 
-// CAROUSEL DATA
+// Swiper styles
+import "swiper/css";
+import "swiper/css/pagination";
 
-interface DataType {
-    profession: string;
-    comment: string;
-    imgSrc: string;
-    name: string;
+interface Testimonial {
+  comment: string;
+  imgSrc: string;
+  parentName: string;
+  studentName: string;
 }
 
-const postData: DataType[] = [
-    {
-        name: "Robert Fox",
-        profession: 'CEO, Parkview Int.Ltd',
-        comment: 'There are many variations of passages of Lorem Ipsum available, but the majority have suffered alteration in some form, by injected humour',
-        imgSrc: '/assets/testimonial/user.svg',
-    },
-    {
-        name: "Leslie Alexander",
-        profession: 'CEO, Parkview Int.Ltd',
-        comment: 'There are many variations of passages of Lorem Ipsum available, but the majority have suffered alteration in some form, by injected humour',
-        imgSrc: '/assets/mentor/user2.png',
-    },
-    {
-        name: "Cody Fisher",
-        profession: 'CEO, Parkview Int.Ltd',
-        comment: 'There are many variations of passages of Lorem Ipsum available, but the majority have suffered alteration in some form, by injected humour',
-        imgSrc: '/assets/mentor/user3.png',
-    },
-    {
-        name: "Robert Fox",
-        profession: 'CEO, Parkview Int.Ltd',
-        comment: 'There are many variations of passages of Lorem Ipsum available, but the majority have suffered alteration in some form, by injected humour',
-        imgSrc: '/assets/mentor/user1.png',
-    },
-    {
-        name: "Leslie Alexander",
-        profession: 'CEO, Parkview Int.Ltd',
-        comment: 'There are many variations of passages of Lorem Ipsum available, but the majority have suffered alteration in some form, by injected humour',
-        imgSrc: '/assets/mentor/user2.png',
-    },
-    {
-        name: "Cody Fisher",
-        profession: 'CEO, Parkview Int.Ltd',
-        comment: 'There are many variations of passages of Lorem Ipsum available, but the majority have suffered alteration in some form, by injected humour',
-        imgSrc: '/assets/mentor/user3.png',
-    },
-]
+const testimonials: Testimonial[] = [
+  {
+    comment:
+      "The school completely transformed how my son learns. He feels valued and is always excited about classes!",
+    imgSrc: "/assets/mentor/avatargirl.svg",
+    parentName: "Emily Johnson",
+    studentName: "Michael Johnson",
+  },
+  {
+    comment:
+      "The teachers are incredible and always available. My daughter has developed confidence and loves the practical projects!",
+    imgSrc: "/assets/mentor/avatargirl.svg",
+    parentName: "Sarah Thompson",
+    studentName: "Emma Thompson",
+  },
+  {
+    comment:
+      "Beyond excellent teaching, the school also promotes important values. I feel my son is in great hands!",
+    imgSrc: "/assets/mentor/avatargirl.svg",
+    parentName: "David Rodriguez",
+    studentName: "Alex Rodriguez",
+  },
+];
 
-// CAROUSEL SETTINGS
+const ParentTestimonials = () => {
+  return (
+    <section
+      className="py-16 bg-gradient-to-b from-blue-50 to-white"
+      aria-labelledby="testimonials-heading"
+    >
+      <div className="container mx-auto px-4">
+        <h2
+          id="testimonials-heading"
+          className="text-center text-4xl font-extrabold text-gray-800 mb-12 tracking-tight"
+        >
+          Parent Voices
+        </h2>
 
+        <Swiper
+          modules={[Pagination, Autoplay]}
+          spaceBetween={30}
+          slidesPerView={1}
+          pagination={{
+            clickable: true,
+            dynamicBullets: true,
+          }}
+          autoplay={{
+            delay: 5000,
+            disableOnInteraction: false,
+          }}
+          breakpoints={{
+            768: {
+              slidesPerView: 2,
+              spaceBetween: 30,
+            },
+            1024: {
+              slidesPerView: 3,
+              spaceBetween: 40,
+            },
+          }}
+          className="testimonial-swiper"
+        >
+          {testimonials.map((testimonial, index) => (
+            <SwiperSlide key={index} className="h-full">
+              <div className="bg-white rounded-xl shadow-lg overflow-hidden transform transition-all duration-300 hover:-translate-y-2 hover:shadow-2xl p-6 relative h-full flex flex-col justify-between">
+                <QuoteIcon
+                  className="absolute top-4 left-4 text-blue-100 opacity-50"
+                  size={48}
+                />
 
-export default class MultipleItems extends Component {
+                <div className="flex flex-col items-center text-center">
+                  <div className="mb-4 mt-2">
+                    <Image
+                      src={testimonial.imgSrc}
+                      alt={`${testimonial.parentName}`}
+                      width={96}
+                      height={96}
+                      className="w-24 h-24 object-cover rounded-full border-4 border-blue-100 shadow-md"
+                    />
+                  </div>
 
-    render() {
-        const settings = {
-            dots: true,
-            dotsClass: "slick-dots",
-            infinite: true,
-            slidesToShow: 3,
-            // centerMode: true,
-            slidesToScroll: 2,
-            arrows: false,
-            autoplay: false,
-            speed: 500,
-            autoplaySpeed: 2000,
-            cssEase: "linear",
-            responsive: [
-                {
-                    breakpoint: 1200,
-                    settings: {
-                        slidesToShow: 3,
-                        slidesToScroll: 1,
-                        infinite: true,
-                        dots: false
-                    }
-                },
-                {
-                    breakpoint: 800,
-                    settings: {
-                        slidesToShow: 2,
-                        slidesToScroll: 1,
-                        infinite: true,
-                        dots: false
-                    }
-                },
-                {
-                    breakpoint: 600,
-                    settings: {
-                        slidesToShow: 1,
-                        slidesToScroll: 1,
-                        infinite: true,
-                        dots: false
-                    }
-                }
-            ]
-        };
+                  <p className="text-gray-600 italic mb-4 relative z-10 min-h-[120px]">
+                    {testimonial.comment}
+                  </p>
 
-        return (
-            <div className="pt-40 pb-10 sm:pb-32 lg:py-32" id="testimonial">
-                <div className='mx-auto max-w-7xl sm:py-4 lg:px-8'>
-                    <Slider {...settings}>
-                        {postData.map((items, i) => (
-                            <div key={i}>
-                                <div className={`bg-white m-4 p-5 my-20 relative ${i % 2 ? 'middleDiv' : 'testimonial-shadow'}`}>
-                                    <div className="absolute top-[-45px]">
-                                        <Image src={items.imgSrc} alt={items.imgSrc} width={100} height={100} className="inline-block" />
-                                    </div>
-                                    <h4 className='text-base font-normal text-darkgray my-4'>{items.comment}</h4>
-                                    <hr style={{ color: "#D7D5D5" }} />
-                                    <div className="flex justify-between">
-                                        <div>
-                                            <h3 className='text-lg font-medium text-darkbrown pt-4 pb-2'>{items.name}</h3>
-                                            <h3 className='text-sm font-normal text-lightgray pb-2'>{items.profession}</h3>
-                                        </div>
-                                        <div className="flex">
-                                            <StarIcon width={20} className="text-gold" />
-                                            <StarIcon width={20} className="text-gold" />
-                                            <StarIcon width={20} className="text-gold" />
-                                            <StarIcon width={20} className="text-gold" />
-                                            <StarIcon width={20} className="text-lightgray" />
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        ))}
-                    </Slider>
+                  <div>
+                    <h3 className="text-lg font-semibold text-gray-800">
+                      {testimonial.parentName}
+                    </h3>
+                    <p className="text-sm text-gray-500">
+                      Parent of {testimonial.studentName}
+                    </p>
+                  </div>
                 </div>
-            </div>
+              </div>
+            </SwiperSlide>
+          ))}
+        </Swiper>
+      </div>
+    </section>
+  );
+};
 
-        );
-    }
-}
+export default ParentTestimonials;

@@ -1,103 +1,106 @@
-"use client"
+"use client";
 import Image from "next/image";
 import React, { Component } from "react";
 import Slider from "react-slick";
 
-// IMAGES DATA FOR CAROUSEL
-interface Data {
-    imgSrc: string;
+// IMAGES OF SCHOOL ACTIVITIES
+interface Activity {
+  imgSrc: string;
+  altText: string;
 }
 
-const data: Data[] = [
-    {
-        imgSrc: "/assets/carousel/airbnb.svg"
-    },
-    {
-        imgSrc: "/assets/carousel/fedex.svg"
-    },
-    {
-        imgSrc: "/assets/carousel/google.svg"
-    },
-    {
-        imgSrc: "/assets/carousel/hubspot.svg"
-    },
-    {
-        imgSrc: "/assets/carousel/microsoft.svg"
-    },
-    {
-        imgSrc: "/assets/carousel/walmart.svg"
-    },
-    {
-        imgSrc: "/assets/carousel/airbnb.svg"
-    },
-    {
-        imgSrc: "/assets/carousel/fedex.svg"
-    }
-]
-
+const activities: Activity[] = [
+  {
+    imgSrc: "/assets/activit/1.png",
+    altText: "Children practicing martial arts",
+  },
+  {
+    imgSrc: "/assets/activit/1.png",
+    altText: "Children painting in a classroom",
+  },
+  {
+    imgSrc: "/assets/activit/1.png",
+    altText: "Children reading together",
+  },
+  {
+    imgSrc: "/assets/activit/1.png",
+    altText: "Children experimenting with science",
+  },
+  {
+    imgSrc: "/assets/activit/1.png",
+    altText: "Children learning music",
+  },
+  {
+    imgSrc: "/assets/activit/1.png",
+    altText: "Children playing outdoor sports",
+  },
+];
 
 // CAROUSEL SETTINGS
-export default class MultipleItems extends Component {
-    render() {
-        const settings = {
-            dots: false,
-            infinite: true,
-            slidesToShow: 4,
+export default class ActivitiesCarousel extends Component {
+  render() {
+    const settings = {
+      dots: true,
+      infinite: true,
+      slidesToShow: 3,
+      slidesToScroll: 1,
+      arrows: true,
+      autoplay: true,
+      speed: 2000,
+      autoplaySpeed: 3000,
+      cssEase: "ease-out",
+      responsive: [
+        {
+          breakpoint: 1024,
+          settings: {
+            slidesToShow: 2,
             slidesToScroll: 1,
-            arrows: false,
-            autoplay: true,
-            speed: 2000,
-            autoplaySpeed: 2000,
-            cssEase: "linear",
-            responsive: [
-                {
-                    breakpoint: 1024,
-                    settings: {
-                        slidesToShow: 4,
-                        slidesToScroll: 1,
-                        infinite: true,
-                        dots: false
-                    }
-                },
-                {
-                    breakpoint: 700,
-                    settings: {
-                        slidesToShow: 2,
-                        slidesToScroll: 1,
-                        infinite: true,
-                        dots: false
-                    }
-                },
-                {
-                    breakpoint: 500,
-                    settings: {
-                        slidesToShow: 1,
-                        slidesToScroll: 1,
-                        infinite: true,
-                        dots: false
-                    }
-                }
-            ]
-        };
+            infinite: true,
+            dots: true,
+          },
+        },
+        {
+          breakpoint: 768,
+          settings: {
+            slidesToShow: 1,
+            slidesToScroll: 1,
+            infinite: true,
+            dots: true,
+          },
+        },
+      ],
+    };
 
-        return (
-
-            <div className='text-center my-20'>
-                <div className="mx-auto max-w-4xl px-4 sm:px-6 lg:max-w-7xl lg:px-8">
-                    <h2 className="text-midnightblue text-2xl font-semibold">Trusted by companies of all sizes</h2>
-                    <div className="py-14">
-                        <Slider {...settings}>
-                            {data.map((item, i) =>
-                                <div key={i}>
-                                    <Image src={item.imgSrc} alt={item.imgSrc} width={116} height={36} />
-                                </div>
-                            )}
-                        </Slider>
-                    </div>
-                    <hr />
+    return (
+      <div className="text-center my-20">
+        <div className="mx-auto max-w-5xl px-4 sm:px-6 lg:max-w-7xl lg:px-8">
+          <h2 className="text-darkblue text-3xl font-bold">
+            Explore Children&apos;s Activities
+          </h2>
+          <p className="text-gray-600 mt-4 text-lg">
+            Discover the wide range of activities that help children learn and
+            grow, from sports to arts and sciences.
+          </p>
+          <div className="py-14">
+            <Slider {...settings}>
+              {activities.map((activity, i) => (
+                <div key={i} className="px-4">
+                  <Image
+                    src={activity.imgSrc}
+                    alt={activity.altText}
+                    width={300}
+                    height={200}
+                    className="rounded-lg shadow-lg object-cover mx-auto"
+                  />
+                  <p className="mt-4 text-gray-700 text-center font-medium">
+                    {activity.altText}
+                  </p>
                 </div>
-            </div>
-
-        )
-    }
+              ))}
+            </Slider>
+          </div>
+        </div>
+      </div>
+    );
+  }
 }

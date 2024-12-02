@@ -1,134 +1,84 @@
-import { Disclosure } from "@headlessui/react";
-import Link from "next/link";
+"use client";
+import Image from "next/image";
 import React, { useState } from "react";
-import { Bars3Icon } from "@heroicons/react/24/outline";
-import Drawer from "./Drawer";
-import Drawerdata from "./Drawerdata";
-import Signdialog from "./Signdialog";
-import Registerdialog from "./Registerdialog";
+import Link from "next/link";
+import { Menu, X } from "lucide-react";
 
-interface NavigationItem {
-  name: string;
-  href: string;
-  current: boolean;
-}
-
-const navigation: NavigationItem[] = [
-  { name: "Home", href: "#/", current: true },
-  //{ name: "Courses", href: "#courses", current: false },
-  { name: "Mentor", href: "#mentor", current: false },
-  { name: "Group", href: "/", current: false },
-  { name: "Testimonial", href: "#testimonial", current: false },
+const navigation = [
+  { name: "Home", href: "/" },
+  { name: "Courses", href: "/courses" },
+  { name: "Mentors", href: "/mentors" },
+  { name: "About", href: "/about" },
+  { name: "Contact", href: "/contact" },
 ];
 
-function classNames(...classes: string[]) {
-  return classes.filter(Boolean).join(" ");
-}
+const Navbar: React.FC = () => {
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
 
-const CustomLink = ({
-  href,
-  onClick,
-  children,
-}: {
-  href: string;
-  onClick: () => void;
-  children: React.ReactNode;
-}) => {
-  return (
-    <Link href={href} passHref>
-      <span onClick={onClick} className="px-3 py-4 text-lg font-normal">
-        {children}
-      </span>
-    </Link>
-  );
-};
-
-const Navbar = () => {
-  const [isOpen, setIsOpen] = React.useState(false);
-
-  const [currentLink, setCurrentLink] = useState("/");
-
-  const handleLinkClick = (href: string) => {
-    setCurrentLink(href);
+  const toggleMenu = () => {
+    setIsMenuOpen(!isMenuOpen);
   };
 
   return (
-    <Disclosure as="nav" className="navbar">
-      <>
-        <div className="mx-auto max-w-7xl px-6 py-4 lg:px-8">
-          <div className="relative flex h-12 md:h-20 items-center justify-between">
-            <div className="flex flex-1 items-center sm:items-stretch sm:justify-start">
-              {/* LOGO */}
-
-              <div className="flex flex-shrink-0 items-center">
-                <img
-                  className="block h-12 w-40 lg:hidden"
-                  src={"/assets/logo/"}
-                  alt="design-logo"
-                />
-                <img
-                  className="hidden h-full w-full lg:block"
-                  src={"/assets/logo/"}
-                  alt="design-logo"
-                />
-              </div>
-
-              {/* LINKS */}
-
-              <div className="hidden lg:block m-auto">
-                <div className="flex space-x-4">
-                  {navigation.map((item) => (
-                    <CustomLink
-                      key={item.name}
-                      href={item.href}
-                      onClick={() => handleLinkClick(item.href)}
-                    >
-                      <span
-                        className={classNames(
-                          item.href === currentLink
-                            ? "underline-links"
-                            : "text-slategray",
-                          "px-3 py-4 text-lg font-normal opacity-75 hover:opacity-100"
-                        )}
-                        aria-current={item.href ? "page" : undefined}
-                      >
-                        {item.name}
-                      </span>
-                    </CustomLink>
-                  ))}
-                </div>
-              </div>
-            </div>
-
-            {/* SIGNIN DIALOG */}
-
-            <Signdialog />
-
-            {/* REGISTER DIALOG */}
-
-            <Registerdialog />
-
-            {/* DRAWER FOR MOBILE VIEW */}
-
-            {/* DRAWER ICON */}
-
-            <div className="block lg:hidden">
-              <Bars3Icon
-                className="block h-6 w-6"
-                aria-hidden="true"
-                onClick={() => setIsOpen(true)}
+    <nav className="bg-white shadow-lg">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="flex justify-between h-16">
+          {/* Logo */}
+          <div className="flex items-center">
+            <Link href="/" className="flex-shrink-0">
+              <Image
+                className="h-8 w-auto"
+                src="/assets/logo/logo.svg"
+                alt="School Logo"
+                width={100}
+                height={100}
               />
-            </div>
+            </Link>
+          </div>
 
-            {/* DRAWER LINKS DATA */}
+          {/* Desktop Navigation */}
+          <div className="hidden md:flex items-center space-x-4">
+            {navigation.map((item) => (
+              <Link
+                key={item.name}
+                href={item.href}
+                className="text-gray-600 hover:text-blue-600 px-3 py-2 rounded-md text-sm font-medium"
+              >
+                {item.name}
+              </Link>
+            ))}
+          </div>
 
-            <Drawer isOpen={isOpen} setIsOpen={setIsOpen}>
-              <Drawerdata />
-            </Drawer>
+          {/* Mobile Menu Button */}
+          <div className="md:hidden flex items-center">
+            <button
+              onClick={toggleMenu}
+              className="inline-flex items-center justify-center p-2 rounded-md text-gray-400 hover:text-gray-500 hover:bg-gray-100"
+            >
+              {isMenuOpen ? <X size={24} /> : <Menu size={24} />}
+            </button>
           </div>
         </div>
-      </>
-    </Disclosure>
+
+        {/* Mobile Menu */}
+        {isMenuOpen && (
+          <div className="md:hidden">
+            <div className="px-2 pt-2 pb-3 space-y-1 sm:px-3">
+              {navigation.map((item) => (
+                <Link
+                  key={item.name}
+                  href={item.href}
+                  onClick={toggleMenu}
+                  className="text-gray-600 hover:bg-gray-100 hover:text-blue-600 block px-3 py-2 rounded-md text-base font-medium"
+                >
+                  {item.name}
+                </Link>
+              ))}
+            </div>
+          </div>
+        )}
+      </div>
+    </nav>
   );
 };
 

@@ -1,151 +1,154 @@
-"use client"
-import Slider from "react-slick";
+"use client";
 import React, { Component } from "react";
 import Image from "next/image";
+import Slider from "react-slick";
+import "slick-carousel/slick/slick.css";
+import "slick-carousel/slick/slick-theme.css";
 
-// CAROUSEL DATA
-
-interface DataType {
-    profession: string;
-    name: string;
-    imgSrc: string;
+// Define interface for team member data
+interface TeamMemberType {
+  name: string;
+  role: string;
+  department: string;
+  imgSrc: string;
+  linkedinUrl?: string;
 }
 
-const postData: DataType[] = [
-    {
-        profession: 'Senior UX Designer',
-        name: 'Shoo Thar Mien',
-        imgSrc: '/assets/mentor/user3.png',
-    },
-    {
-        profession: 'Senior UX Designer',
-        name: 'Shoo Thar Mien',
-        imgSrc: '/assets/mentor/user2.png',
-    },
-    {
-        profession: 'Senior UX Designer',
-        name: 'Shoo Thar Mien',
-        imgSrc: '/assets/mentor/user1.png',
-    },
-    {
-        profession: 'Senior UX Designer',
-        name: 'Shoo Thar Mien',
-        imgSrc: '/assets/mentor/user3.png',
-    },
-    {
-        profession: 'Senior UX Designer',
-        name: 'Shoo Thar Mien',
-        imgSrc: '/assets/mentor/user2.png',
-    },
-    {
-        profession: 'Senior UX Designer',
-        name: 'Shoo Thar Mien',
-        imgSrc: '/assets/mentor/user1.png',
-    },
-]
+// Team members data
+const teamMembers: TeamMemberType[] = [
+  {
+    name: "Dr. Maria Silva",
+    role: "Academic Director",
+    department: "Academic Management",
+    imgSrc: "/assets/mentor/avatargirl.svg",
+    linkedinUrl: "https://linkedin.com/in/mariasilva",
+  },
+  {
+    name: "Prof. João Santos",
+    role: "Teaching Coordinator",
+    department: "Educational Development",
+    imgSrc: "/assets/mentor/avatarmen.svg",
+    linkedinUrl: "https://linkedin.com/in/joaosantos",
+  },
+  {
+    name: "Profa. Ana Oliveira",
+    role: "Academic Coordinator",
+    department: "Research and Extension",
+    imgSrc: "/assets/mentor/avatargirl.svg",
+    linkedinUrl: "https://linkedin.com/in/anaoliveira",
+  },
+  {
+    name: "Prof. Carlos Mendes",
+    role: "Innovation Director",
+    department: "Strategic Development",
+    imgSrc: "/assets/mentor/avatarmen.svg",
+    linkedinUrl: "https://linkedin.com/in/carlosmendes",
+  },
+];
 
-// CAROUSEL SETTINGS
-
-function SampleNextArrow(props: { className: any; style: any; onClick: any; }) {
-    const { className, style, onClick } = props;
-    return (
-        <div
-            className={className}
-            style={{ ...style, display: "flex", justifyContent: "center", position: 'absolute', alignItems: "center" , background: "#D5EFFA", padding: "28px", borderRadius: "30px", border: "1px solid #1A21BC" }}
-            onClick={onClick}
-        />
-    );
-}
-
-function SamplePrevArrow(props: { className: any; style: any; onClick: any; }) {
-    const { className, style, onClick } = props;
-    return (
-        <div
-            className={className}
-            style={{ ...style, display: "flex", justifyContent: "center", alignItems: "center" , background: "#D5EFFA", padding: "28px", borderRadius: "30px", border: "1px solid #1A21BC" }}
-            onClick={onClick}
-        />
-    );
-}
-
-
-
-export default class MultipleItems extends Component {
-
-    render() {
-        const settings = {
-            dots: false,
-            infinite: true,
+export default class EducationalTeamCarousel extends Component {
+  render() {
+    const settings = {
+      dots: false,
+      infinite: true,
+      speed: 500,
+      slidesToShow: 3,
+      slidesToScroll: 1,
+      autoplay: true,
+      autoplaySpeed: 3000,
+      responsive: [
+        {
+          breakpoint: 1200,
+          settings: {
             slidesToShow: 3,
-            // centerMode: true,
             slidesToScroll: 1,
-            arrows: false,
-            autoplay: false,
-            speed: 4000,
-            nextArrow: <SampleNextArrow className={undefined} style={undefined} onClick={undefined} />,
-            prevArrow: <SamplePrevArrow className={undefined} style={undefined} onClick={undefined} />,
-            autoplaySpeed: 4500,
-            cssEase: "linear",
-            responsive: [
-                {
-                    breakpoint: 1200,
-                    settings: {
-                        slidesToShow: 3,
-                        slidesToScroll: 1,
-                        infinite: true,
-                        dots: false
-                    }
-                },
-                {
-                    breakpoint: 1000,
-                    settings: {
-                        slidesToShow: 2,
-                        slidesToScroll: 1,
-                        infinite: true,
-                        dots: false
-                    }
-                },
-                {
-                    breakpoint: 530,
-                    settings: {
-                        slidesToShow: 1,
-                        slidesToScroll: 1,
-                        infinite: true,
-                        dots: false
-                    }
-                }
-            ]
-        };
+          },
+        },
+        {
+          breakpoint: 1000,
+          settings: {
+            slidesToShow: 2,
+            slidesToScroll: 1,
+          },
+        },
+        {
+          breakpoint: 600,
+          settings: {
+            slidesToShow: 1,
+            slidesToScroll: 1,
+          },
+        },
+      ],
+    };
 
+    return (
+      <section className="py-16 bg-gray-50" id="our-team">
+        <div className="container mx-auto px-4">
+          <div className="text-center mb-12">
+            <h2 className="text-4xl font-bold text-gray-800 mb-4">
+              Academic Leadership
+            </h2>
+            <p className="text-xl text-gray-600 max-w-2xl mx-auto">
+              Meet the professionals leading our educational excellence.
+            </p>
+          </div>
 
-        return (
-            <div className="py-10 sm:py-24 bg-paleblue" id="mentor">
-
-                <div className='mx-auto max-w-2xl lg:max-w-7xl sm:py-4 px-4 lg:px-8 relative'>
-                    <h2 className="lh-82 text-midnightblue text-4xl md:text-55xl text-center md:text-start font-semibold">Meet with our <br /> mentor.</h2>
-
-                    <Slider {...settings}>
-                        {postData.map((items, i) => (
-                            <div key={i}>
-                                <div className='m-3 py-14 md:my-10 text-center'>
-                                    <div className="relative">
-                                        <Image src={items.imgSrc} alt="user-image" width={306} height={0} className="inline-block m-auto" />
-                                        <div className="absolute right-[84px] bottom-[102px] bg-white rounded-full p-4">
-                                            <Image src={'/assets/mentor/linkedin.svg'} alt="linkedin-image" width={25} height={24} />
-                                        </div>
-                                    </div>
-                                    <div className="-mt-10">
-                                        <h3 className='text-2xl font-semibold text-lightblack'>{items.name}</h3>
-                                        <h4 className='text-lg font-normal text-lightblack pt-2 opacity-50'>{items.profession}</h4>
-                                    </div>
-                                </div>
-                            </div>
-                        ))}
-                    </Slider>
-
+          <Slider {...settings}>
+            {teamMembers.map((member, index) => (
+              <div key={index} className="px-4">
+                <div className="bg-white shadow-lg rounded-lg overflow-hidden transition-all duration-300 hover:shadow-xl mx-auto max-w-xs">
+                  <div className="relative h-60 w-full">
+                    <Image
+                      src={member.imgSrc}
+                      alt={`Photo of ${member.name}`}
+                      layout="fill"
+                      objectFit="cover"
+                      className="transition-transform duration-300 hover:scale-105"
+                    />
+                  </div>
+                  <div className="p-4 text-center">
+                    <h3 className="text-xl font-semibold text-gray-800 mb-2">
+                      {member.name}
+                    </h3>
+                    <div className="space-y-1">
+                      <p className="text-base text-gray-600">{member.role}</p>
+                      <p className="text-sm text-gray-500">
+                        {member.department}
+                      </p>
+                    </div>
+                    {member.linkedinUrl && (
+                      <div className="mt-3">
+                        <a
+                          href={member.linkedinUrl}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="inline-flex items-center justify-center w-8 h-8 bg-blue-100 text-blue-600 rounded-full hover:bg-blue-200 transition-colors"
+                        >
+                          <svg
+                            xmlns="http://www.w3.org/2000/svg"
+                            width="20"
+                            height="20"
+                            viewBox="0 0 24 24"
+                            fill="none"
+                            stroke="currentColor"
+                            strokeWidth="2"
+                            strokeLinecap="round"
+                            strokeLinejoin="round"
+                          >
+                            <path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z" />
+                            <rect x="2" y="9" width="4" height="12" />
+                            <circle cx="4" cy="4" r="2" />
+                          </svg>
+                        </a>
+                      </div>
+                    )}
+                  </div>
                 </div>
-            </div>
-
-        );
-    }
+              </div>
+            ))}
+          </Slider>
+        </div>
+      </section>
+    );
+  }
 }
